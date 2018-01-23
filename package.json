@@ -1,0 +1,27 @@
+{
+  "name": "gulp-postcss-boilerplate-master",
+  "version": "1.0.0",
+  "description": "Basic gulp config to handle Postcss compilation",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "apache-server-configs": "^2.15.0",
+    "cssnano": "^3.10.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^7.0.1",
+    "gulp-util": "^3.0.8",
+    "modernizr": "^3.5.0",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-uncss": "^0.16.1",
+    "precss": "^3.1.0",
+    "run-sequence": "^2.2.1",
+    "uncss": "^0.16.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
