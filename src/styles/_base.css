@@ -157,9 +157,33 @@ img {
 }
 
 fieldset {
-    border: 1px solid var(--lightGrey-color); 
+    border: 1px solid var(--lightGrey-color);
 }
 
 iframe {
     border: 0;
 }
+/* @start color */
+:root {
+    --red: #e23B00;
+    --blue: #3f526b;
+    --black: #000;
+    --background: #faf8f5;
+}
+/* @end color */
+
+/*
+@styleguide
+
+@title Button
+
+Use the button classes on and `<a>`, `<button>`, `<input>` elements.
+
+<button class="button button--large button--red">Red Button</button>
+
+    <button class="button button--large button--red">Red Button</button>
+
+<button class="button button--large button--blue">Red Button</button>
+
+    <button class="button button--large button--blue">Red Button</button>
+*/

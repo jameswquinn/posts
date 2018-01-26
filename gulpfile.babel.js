@@ -26,20 +26,57 @@
 'use strict';
 
 import gulp from 'gulp';
-import util from 'gulp-util';
+import gulpLoadPlugins from 'gulp-load-plugins';
 import runSequence from 'run-sequence';
 import modernizr from 'modernizr';
 import fs from 'fs';
+import del from 'del';
 import critical from 'critical';
-import modernizrConfig from './modernizr-config.json';
+import modernizrConfig from './src/modernizr-config.json';
+import {
+    output as pagespeed
+}
+from 'psi';
 
-import postcss from 'gulp-postcss';
 import precss from 'precss';
 import cssnext from 'postcss-cssnext';
 import uncss from 'postcss-uncss';
 import cssnano from 'cssnano';
+import customProperties from 'postcss-custom-properties';
+import Import from 'postcss-import';
+import styleGuide from 'postcss-style-guide';
 
+const $ = gulpLoadPlugins();
+const htmlnanoOptions = {
+    removeComments: true
+};
 
+gulp.task('styleguide', () => {
+    return gulp.src('dist/chota.css')
+        .pipe($.postcss([
+            Import(),
+            customProperties({
+                preserve: true
+            }),
+            styleGuide({
+                project: 'Project name',
+                dest: 'dist/styleguide/index.html',
+                showCode: true,
+                themePath: 'node_modules/psg-theme-default'
+            }),
+        ]))
+})
+
+gulp.task('htmlnano', () => {
+    return gulp
+        .src('dist/**/*.html')
+        .pipe($.htmlnano(htmlnanoOptions))
+        .pipe(gulp.dest('dist'));
+})
+
+gulp.task('del', () => {
+    return del('dist')
+})
 
 gulp.task('copy:misc', () => {
     return gulp.src('misc/**/*')
@@ -47,22 +84,22 @@ gulp.task('copy:misc', () => {
 })
 
 gulp.task('styles', () => {
-    const development = [
+    const postcssOptions = [
         precss(),
         cssnext({
             browsers: ['last 2 versions'],
             warnForDuplicates: true
         }),
     ]
-    const production = [
-        precss(),
-        cssnext({
-            browsers: ['last 2 versions'],
-            warnForDuplicates: true
-        }),
+    return gulp.src('src/styles/chota.css')
+        .pipe($.postcss(postcssOptions))
+        .pipe(gulp.dest('dist'))
+})
+
+gulp.task('uncss', () => {
+    const uncssOptions = [
         uncss({
-            html: ['index.html'],
-            ignore: []
+            html: ['dist/**/*.html'],
         }),
         cssnano({
             autoprefixer: false,
@@ -73,9 +110,8 @@ gulp.task('styles', () => {
             }]
         })
     ]
-    return gulp.src('src/styles/chota.css')
-        .pipe(!!util.env.production ? postcss(production) : util.noop())
-        .pipe(!util.env.production ? postcss(development) : util.noop())
+    return gulp.src('dist/chota.css')
+        .pipe(!!$.util.env.production ? postcss(uncssOptions) : $.util.noop())
         .pipe(gulp.dest('dist'))
 })
 
@@ -88,7 +124,7 @@ gulp.task('modernizr', (done) => {
 gulp.task('critical', (cb) => {
     critical.generate({
         inline: true,
-        base: '.',
+        base: 'dist',
         src: 'index.html',
         dest: 'index.html',
         dimensions: [{
@@ -106,8 +142,28 @@ gulp.task('critical', (cb) => {
 
 gulp.task('default', () => {
     runSequence(
+        'del',
         'copy:misc',
         'styles', // ...then do this
-        'modernizr'
+        'uncss',
+        'styleguide',
+        'modernizr',
+        'htmlnano',
+        'critical',
     );
 });
+
+// Run PageSpeed Insights
+gulp.task('pagespeed', cb =>
+    // Update the below URL to the public URL of your site
+    pagespeed('https://www.apple.com', {
+        strategy: 'desktop'
+            // By default we use the PageSpeed Insights free (no API key) tier.
+            // Use a Google Developer API key if you have one: http://goo.gl/RkN0vE
+            // key: 'YOUR_API_KEY'
+    }, cb)
+);
+
+
+//.pipe(!!util.env.production ? dosomething(production) : util.noop())
+//.pipe(!util.env.production ? dosomething(development) : util.noop())

@@ -1,0 +1,14 @@
+{
+  "minify": true,
+  "options": [
+    "setClasses"
+  ],
+  "feature-detects": [
+    "test/ambientlight",
+    "test/battery",
+    "test/json",
+    "test/vibration",
+    "test/battery/lowbattery",
+    "test/img/webp"
+  ]
+}
