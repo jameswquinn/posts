@@ -1,0 +1,12 @@
+{
+  '*.jpg': {
+    // Resize all JPG images to 200 pixels wide
+    width: 200,
+    rename: { suffix: '-200' }
+  },
+  // Resize all images to 100 pixels wide and add suffix -thumbnail
+  '*': {
+    width: 100,
+    rename: { suffix: '-thumbnail' },
+  },
+}

@@ -17,6 +17,7 @@
     "gulp-htmlnano": "^0.1.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-postcss": "^7.0.1",
+    "gulp-responsive": "^2.9.0",
     "gulp-util": "^3.0.8",
     "modernizr": "^3.5.0",
     "postcss-cssnext": "^3.1.0",

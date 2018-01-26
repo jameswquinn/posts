@@ -33,6 +33,7 @@ import fs from 'fs';
 import del from 'del';
 import critical from 'critical';
 import modernizrConfig from './src/modernizr-config.json';
+import responsiveOptions from './required/responsive.js';
 import {
     output as pagespeed
 }
@@ -49,7 +50,13 @@ import styleGuide from 'postcss-style-guide';
 const $ = gulpLoadPlugins();
 const htmlnanoOptions = {
     removeComments: true
-};
+}
+
+gulp.task('img', () => {
+    return gulp.src('src/images/*.{jpg,png}')
+        .pipe($.responsive(responsiveOptions))
+        .pipe(gulp.dest('dist'));
+})
 
 gulp.task('styleguide', () => {
     return gulp.src('dist/chota.css')
@@ -146,6 +153,7 @@ gulp.task('default', () => {
         'copy:misc',
         'styles', // ...then do this
         'uncss',
+        'img',
         'styleguide',
         'modernizr',
         'htmlnano',
