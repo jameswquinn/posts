@@ -52,6 +52,23 @@ const $ = gulpLoadPlugins();
 const htmlnanoOptions = {
     removeComments: true
 }
+const pkg = require('./package.json');
+const comment = '/*\n' +
+    ' * <%= pkg.name %> <%= pkg.version %>\n' +
+    ' * <%= pkg.description %>\n' +
+    ' * <%= pkg.homepage %>\n' +
+    ' * \n' +
+    ' * Copyright 2018, <%= pkg.author %>\n' +
+    ' * Released under the <%= pkg.license %> license.\n' +
+    '*/\n\n';
+
+gulp.task('taskName', () => {
+    gulp.src('dist/js/modernizr.min.js')
+        .pipe($.banner(comment, {
+            pkg: pkg
+        }))
+        .pipe(gulp.dest('dist/js'));
+});
 
 gulp.task('del', () => {
     return del('dist')
@@ -195,6 +212,7 @@ gulp.task('default', () => {
         'svg:copy',
         'favicon',
         'modernizr',
+        'taskName',
         'htmlnano',
         'critical',
     );
