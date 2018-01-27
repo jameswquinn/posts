@@ -54,11 +54,11 @@ const htmlnanoOptions = {
 }
 
 gulp.task('svg:copy', () => {
-gulp.src('src/logo/icon.svg')
-.pipe($.rename({
-    basename: 'safari-pinned-tab',
-  }))
-  .pipe(gulp.dest('dist'))
+    gulp.src('src/logo/icon.svg')
+        .pipe($.rename({
+            basename: 'safari-pinned-tab',
+        }))
+        .pipe(gulp.dest('dist'))
 })
 
 gulp.task('svg2png', function() {
@@ -70,12 +70,12 @@ gulp.task('svg2png', function() {
         .pipe(gulp.dest('src/logo'));
 })
 
-gulp.task("favicon",  () => {
+gulp.task("favicon", () => {
     return gulp.src("src/logo/icon.png")
-    .pipe(!!$.util.env.production ? $.favicons(faviconOptions) : $.util.noop())
-    .on("error", $.util.log)
-    .pipe(gulp.dest('dist/assets/icons'));
-});
+        .pipe(!!$.util.env.production ? $.favicons(faviconOptions) : $.util.noop())
+        .on("error", $.util.log)
+        .pipe(gulp.dest('dist/assets/icons'));
+})
 
 gulp.task('img', () => {
     return gulp.src('src/images/*.{jpg,png}')
@@ -172,7 +172,7 @@ gulp.task('critical', (cb) => {
             height: 960
         }],
     });
-});
+})
 
 gulp.task('default', () => {
     runSequence(
@@ -187,7 +187,7 @@ gulp.task('default', () => {
         'htmlnano',
         'critical',
     );
-});
+})
 
 // Run PageSpeed Insights
 gulp.task('pagespeed', cb =>
@@ -198,7 +198,7 @@ gulp.task('pagespeed', cb =>
             // Use a Google Developer API key if you have one: http://goo.gl/RkN0vE
             // key: 'YOUR_API_KEY'
     }, cb)
-);
+)
 
 
 //.pipe(!!util.env.production ? dosomething(production) : util.noop())
