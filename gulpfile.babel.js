@@ -32,8 +32,9 @@ import modernizr from 'modernizr';
 import fs from 'fs';
 import del from 'del';
 import critical from 'critical';
-import modernizrConfig from './src/modernizr-config.json';
+import modernizrConfig from './required/modernizr-config.json';
 import responsiveOptions from './required/responsive.js';
+import faviconOptions from './required/favicon.js';
 import {
     output as pagespeed
 }
@@ -52,10 +53,34 @@ const htmlnanoOptions = {
     removeComments: true
 }
 
+gulp.task('svg:copy', () => {
+gulp.src('src/logo/icon.svg')
+.pipe($.rename({
+    basename: 'safari-pinned-tab',
+  }))
+  .pipe(gulp.dest('dist'))
+})
+
+gulp.task('svg2png', function() {
+    return gulp.src('src/logo/icon.svg')
+        .pipe($.rsvg({
+            width: 500,
+            height: 500
+        }))
+        .pipe(gulp.dest('src/logo'));
+})
+
+gulp.task("favicon",  () => {
+    return gulp.src("src/logo/icon.png")
+    .pipe(!!$.util.env.production ? $.favicons(faviconOptions) : $.util.noop())
+    .on("error", $.util.log)
+    .pipe(gulp.dest('dist/assets/icons'));
+});
+
 gulp.task('img', () => {
     return gulp.src('src/images/*.{jpg,png}')
         .pipe($.responsive(responsiveOptions))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/assets/images'));
 })
 
 gulp.task('styleguide', () => {
@@ -91,20 +116,12 @@ gulp.task('copy:misc', () => {
 })
 
 gulp.task('styles', () => {
-    const postcssOptions = [
+    const production = [
         precss(),
         cssnext({
             browsers: ['last 2 versions'],
             warnForDuplicates: true
         }),
-    ]
-    return gulp.src('src/styles/chota.css')
-        .pipe($.postcss(postcssOptions))
-        .pipe(gulp.dest('dist'))
-})
-
-gulp.task('uncss', () => {
-    const uncssOptions = [
         uncss({
             html: ['dist/**/*.html'],
         }),
@@ -117,9 +134,19 @@ gulp.task('uncss', () => {
             }]
         })
     ]
-    return gulp.src('dist/chota.css')
-        .pipe(!!$.util.env.production ? postcss(uncssOptions) : $.util.noop())
-        .pipe(gulp.dest('dist'))
+
+    const development = [
+        precss(),
+        cssnext({
+            browsers: ['last 2 versions'],
+            warnForDuplicates: true
+        }),
+    ]
+
+    return gulp.src('src/styles/chota.css')
+        .pipe(!!$.util.env.production ? $.postcss(production) : $.util.noop())
+        .pipe(!$.util.env.production ? $.postcss(development) : $.util.noop())
+        .pipe(gulp.dest('dist/css'))
 })
 
 gulp.task('modernizr', (done) => {
@@ -152,9 +179,10 @@ gulp.task('default', () => {
         'del',
         'copy:misc',
         'styles', // ...then do this
-        'uncss',
         'img',
-        'styleguide',
+        'svg2png',
+        'svg:copy',
+        'favicon',
         'modernizr',
         'htmlnano',
         'critical',
