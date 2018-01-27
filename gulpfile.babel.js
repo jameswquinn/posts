@@ -61,7 +61,7 @@ gulp.task('svg:copy', () => {
         .pipe(gulp.dest('dist'))
 })
 
-gulp.task('svg2png', function() {
+gulp.task('svg2png', () => {
     return gulp.src('src/logo/icon.svg')
         .pipe($.rsvg({
             width: 500,
