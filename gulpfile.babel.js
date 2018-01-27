@@ -53,59 +53,6 @@ const htmlnanoOptions = {
     removeComments: true
 }
 
-gulp.task('svg:copy', () => {
-    gulp.src('src/logo/icon.svg')
-        .pipe($.rename({
-            basename: 'safari-pinned-tab',
-        }))
-        .pipe(gulp.dest('dist'))
-})
-
-gulp.task('svg2png', () => {
-    return gulp.src('src/logo/icon.svg')
-        .pipe($.rsvg({
-            width: 500,
-            height: 500
-        }))
-        .pipe(gulp.dest('src/logo'));
-})
-
-gulp.task("favicon", () => {
-    return gulp.src("src/logo/icon.png")
-        .pipe(!!$.util.env.production ? $.favicons(faviconOptions) : $.util.noop())
-        .on("error", $.util.log)
-        .pipe(gulp.dest('dist/assets/icons'));
-})
-
-gulp.task('img', () => {
-    return gulp.src('src/images/*.{jpg,png}')
-        .pipe($.responsive(responsiveOptions))
-        .pipe(gulp.dest('dist/assets/images'));
-})
-
-gulp.task('styleguide', () => {
-    return gulp.src('dist/chota.css')
-        .pipe($.postcss([
-            Import(),
-            customProperties({
-                preserve: true
-            }),
-            styleGuide({
-                project: 'Project name',
-                dest: 'dist/styleguide/index.html',
-                showCode: true,
-                themePath: 'node_modules/psg-theme-default'
-            }),
-        ]))
-})
-
-gulp.task('htmlnano', () => {
-    return gulp
-        .src('dist/**/*.html')
-        .pipe($.htmlnano(htmlnanoOptions))
-        .pipe(gulp.dest('dist'));
-})
-
 gulp.task('del', () => {
     return del('dist')
 })
@@ -149,10 +96,47 @@ gulp.task('styles', () => {
         .pipe(gulp.dest('dist/css'))
 })
 
+gulp.task('img', () => {
+    return gulp.src('src/images/*.{jpg,png}')
+        .pipe($.responsive(responsiveOptions))
+        .pipe(gulp.dest('dist/assets/images'));
+})
+
+gulp.task('svg2png', () => {
+    return gulp.src('src/logo/icon.svg')
+        .pipe($.rsvg({
+            width: 500,
+            height: 500
+        }))
+        .pipe(gulp.dest('src/logo'));
+})
+
+gulp.task('svg:copy', () => {
+    gulp.src('src/logo/icon.svg')
+        .pipe($.rename({
+            basename: 'safari-pinned-tab',
+        }))
+        .pipe(gulp.dest('dist'))
+})
+
+gulp.task("favicon", () => {
+    return gulp.src("src/logo/icon.png")
+        .pipe(!!$.util.env.production ? $.favicons(faviconOptions) : $.util.noop())
+        .on("error", $.util.log)
+        .pipe(gulp.dest('dist/assets/icons'));
+})
+
 gulp.task('modernizr', (done) => {
     modernizr.build(modernizrConfig, (code) => {
         fs.writeFile(`dist/js/modernizr.min.js`, code, done);
     });
+})
+
+gulp.task('htmlnano', () => {
+    return gulp
+        .src('dist/**/*.html')
+        .pipe($.htmlnano(htmlnanoOptions))
+        .pipe(gulp.dest('dist'));
 })
 
 gulp.task('critical', (cb) => {
@@ -174,6 +158,33 @@ gulp.task('critical', (cb) => {
     });
 })
 
+gulp.task('styleguide', () => {
+    return gulp.src('dist/chota.css')
+        .pipe($.postcss([
+            Import(),
+            customProperties({
+                preserve: true
+            }),
+            styleGuide({
+                project: 'Project name',
+                dest: 'dist/styleguide/index.html',
+                showCode: true,
+                themePath: 'node_modules/psg-theme-default'
+            }),
+        ]))
+})
+
+// Run PageSpeed Insights
+gulp.task('pagespeed', cb =>
+    // Update the below URL to the public URL of your site
+    pagespeed('https://www.apple.com', {
+        strategy: 'desktop'
+            // By default we use the PageSpeed Insights free (no API key) tier.
+            // Use a Google Developer API key if you have one: http://goo.gl/RkN0vE
+            // key: 'YOUR_API_KEY'
+    }, cb)
+)
+
 gulp.task('default', () => {
     runSequence(
         'del',
@@ -188,18 +199,6 @@ gulp.task('default', () => {
         'critical',
     );
 })
-
-// Run PageSpeed Insights
-gulp.task('pagespeed', cb =>
-    // Update the below URL to the public URL of your site
-    pagespeed('https://www.apple.com', {
-        strategy: 'desktop'
-            // By default we use the PageSpeed Insights free (no API key) tier.
-            // Use a Google Developer API key if you have one: http://goo.gl/RkN0vE
-            // key: 'YOUR_API_KEY'
-    }, cb)
-)
-
 
 //.pipe(!!util.env.production ? dosomething(production) : util.noop())
 //.pipe(!util.env.production ? dosomething(development) : util.noop())
