@@ -29,3 +29,16 @@ gulp.task('images', () => {
 * -<width>x<height>@<scale>x - image-100x200@2x.png
 * @<scale>x - image@2x.png
 */
+
+
+gulp.task('screen', () => {
+const Pageres = require('pageres');
+
+const pageres = new Pageres({delay: 2})
+    //.src('yeoman.io', ['480x320', '1024x768', 'iphone 5s'], {crop: false})
+    //.src('todomvc.com', ['1280x1024', '1920x1080'])
+    .src('./public/index.html',  ['320x480','480x320', '1024x768', 'iphone 5s'], {crop: false})
+    .dest('out')
+    .run()
+    .then(() => console.log('done'));
+  });
