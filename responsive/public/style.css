@@ -1,0 +1,8 @@
+.image {
+  /* fallback */
+  background-image: url("images/background-image-x200.jpg");
+  /* image-set */
+  background-image: image-set("images/background-image-x200.jpg" 1x,
+                              "images/background-image-x200@2x.jpg" 2x,
+                              "images/background-image-x200@3x.jpg" 3x);
+}
