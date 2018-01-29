@@ -19,6 +19,13 @@ gulp.task('images', () => {
     .pipe(gulp.dest('public/images'));
 });
 
-
-//file:///Users/jamesquinn/responsive/public/images/background-image-x549.jpg
-//file:///Users/jamesquinn/responsive/public/images/background-image-x1373.jpg
+/*
+* Supported filename format
+*
+* -<width> - image-100.png
+* -<width>x - image-100x.png
+* -<width>x<height> - image-100x200.png
+* -x<height> - image-x200.png
+* -<width>x<height>@<scale>x - image-100x200@2x.png
+* @<scale>x - image@2x.png
+*/
