@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-html": "^0.4.7",
     "gulp-load-plugins": "^1.5.0",
     "gulp-responsive": "^2.9.0",
     "gulp-responsive-config": "^1.1.0",

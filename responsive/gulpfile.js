@@ -42,3 +42,11 @@ const pageres = new Pageres({delay: 2})
     .run()
     .then(() => console.log('done'));
   });
+
+  var validator = require('gulp-html');
+//html linter
+gulp.task('html', function() {
+  return gulp.src('public/**/*.html')
+  .pipe(validator())
+  .pipe(gulp.dest('dist/'));
+});
