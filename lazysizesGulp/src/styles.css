@@ -1,0 +1,9 @@
+.image {
+  /* fallback */
+  background-image: url("images/coutureportrait_heikedelmore_copyright.jpg");
+  /* image-set */
+  background-image: image-set("images/coutureportrait_heikedelmore_copyright-x200.jpg" 1x,
+                              "images/coutureportrait_heikedelmore_copyright-x200@2x.jpg" 2x,
+                              "images/coutureportrait_heikedelmore_copyright-x200@3x.jpg" 3x);
+
+}
