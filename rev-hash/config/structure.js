@@ -1,5 +1,5 @@
 // Folder Structure Defaults
-const build  = 'build'
+const build  = 'dest'
 const pages  = 'pages'
 
 // Where to look for source files

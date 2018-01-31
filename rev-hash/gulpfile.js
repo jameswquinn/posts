@@ -1,7 +1,8 @@
 const gulp = require('gulp');
 const rev = require('gulp-rev-hash');
 const prettyUrl = require("gulp-pretty-url");
-const urlPrefix = require('gulp-html-url-prefix');
+//const urlPrefix = require('gulp-html-url-prefix');
+const urlPrefix = require('gulp-html-url-prefix-custom');
 const structure = require('./config/structure');
 
 
@@ -12,9 +13,8 @@ gulp.task('index',['pages'], () => {
         }))
         .pipe(prettyUrl())
         .pipe(urlPrefix({
-            //prefix: '//cdn.xxx.com'
-            prefix: '',
-            tags: ['script', 'link']
+          prefix: '',
+          attrdata: ["script:src", "link:href"]  //自定义标签属性
         }))
         .pipe(gulp.dest(structure.dest.dir));
 });
@@ -26,9 +26,8 @@ gulp.task('pages', () => {
         }))
         .pipe(prettyUrl())
         .pipe(urlPrefix({
-            //prefix: '//cdn.xxx.com'
-            prefix: '../',
-            tags: ['script', 'link']
+          prefix: '../',
+          attrdata: ["script:src", "link:href"]  //自定义标签属性
         }))
         .pipe(gulp.dest(structure.dest.dir));
 });
