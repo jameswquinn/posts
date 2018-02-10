@@ -1,0 +1,26 @@
+{
+  "name": "james7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chota": "^0.4.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-combine-json": "^1.0.2",
+    "gulp-markdown-to-json": "^1.0.3",
+    "gulp-marked": "^1.0.0",
+    "gulp-modify-file": "^1.0.0",
+    "gulp-pretty-data": "^0.1.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.8",
+    "marked": "^0.3.12"
+  }
+}
