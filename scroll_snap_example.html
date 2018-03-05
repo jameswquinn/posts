@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>scroll-snap example</title>
+
+<style>
+::-webkit-scrollbar { display: none;}
+.wrapper {
+  width: 25rem;}
+  .scroll-snap {
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+          -webkit-scroll-snap-type: mandatory;
+              -ms-scroll-snap-type: mandatory;
+                  scroll-snap-type: mandatory;
+  /* older spec implementation */
+          -webkit-scroll-snap-destination: 0% 100%;
+              -ms-scroll-snap-destination: 0% 100%;
+                  scroll-snap-destination: 0% 100%;
+          -webkit-scroll-snap-points-x: repeat(100%);
+              -ms-scroll-snap-points-x: repeat(100%);
+                  scroll-snap-points-x: repeat(100%);
+}
+
+.scroll-snap_item {
+  scroll-snap-align: start;
+  -webkit-scroll-snap-coordinate: 0% 0%;
+      -ms-scroll-snap-coordinate: 0% 0%;
+          scroll-snap-coordinate: 0% 0%;
+  width: 100%;
+}
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+.lazyloaded {
+	opacity: 1;
+	-webkit-transition: opacity 300ms;
+	-o-transition: opacity 300ms;
+	transition: opacity 300ms;
+}
+</style>
+</head>
+
+<body>
+
+
+<div class="wrapper">
+  <h1>Hello</h1>
+<div class="scroll-snap">
+
+
+  <img class="lazyload scroll-snap_item"data-src="https://picsum.photos/400/300/?random" alt="" />
+  <img class="lazyload scroll-snap_item"data-src="https://picsum.photos/401/300/?random" alt="" />
+  <img class="lazyload scroll-snap_item"data-src="https://picsum.photos/402/300/?random" alt="" />
+  <img class="lazyload scroll-snap_item"data-src="https://picsum.photos/403/300/?random" alt="" />
+  <img class="lazyload scroll-snap_item"data-src="https://picsum.photos/399/300/?random" alt="" />
+  <img class="lazyload scroll-snap_item"data-src="https://picsum.photos/398/300/?random" alt="" />
+  <img class="lazyload scroll-snap_item"data-src="https://picsum.photos/397/300/?random" alt="" />
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.0.1/lazysizes.min.js" charset="utf-8"></script>
+</body>
+
+</html>
