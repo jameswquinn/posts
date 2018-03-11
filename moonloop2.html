@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app6">
+
+
+        <m-card m-for="image in images" src="{{image}}"></m-card>
+
+
+  </div>
+  <!-- Production Build -->
+<script src="https://unpkg.com/moonjs"></script>
+  <script type="text/javascript">
+  Moon.component('m-card', {
+  props: ['src'],
+  template: '<img src="{{src}}" alt="">'
+});
+
+  const app6 = new Moon({
+    el: "#app6",
+    data: {
+      images: ['https://picsum.photos/400/300?image=90', 'https://picsum.photos/400/300?image=20', 'https://picsum.photos/400/300?image=10', 'https://picsum.photos/400/300?image=30']
+    }
+  });
+  </script>
+</body>
+</html>
