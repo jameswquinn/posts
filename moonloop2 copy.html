@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sanitize.css/2.0.0/sanitize.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/milligram@1.3.0/dist/milligram.min.css">
+  <style>
+  :root {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+  ::-webkit-scrollbar {
+     display: none;
+   }
+    .m-card_scroll-snap {
+    white-space: nowrap;
+    overflow-y: hidden;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+            -webkit-scroll-snap-type: mandatory;
+                -ms-scroll-snap-type: mandatory;
+                    scroll-snap-type: mandatory;
+    /* older spec implementation */
+            -webkit-scroll-snap-destination: 0% 100%;
+                -ms-scroll-snap-destination: 0% 100%;
+                    scroll-snap-destination: 0% 100%;
+            -webkit-scroll-snap-points-x: repeat(100%);
+                -ms-scroll-snap-points-x: repeat(100%);
+                    scroll-snap-points-x: repeat(100%);
+  }
+  .scroll-snap__item {
+    scroll-snap-align: start;
+    -webkit-scroll-snap-coordinate: 0% 0%;
+        -ms-scroll-snap-coordinate: 0% 0%;
+            scroll-snap-coordinate: 0% 0%;
+                width: 100%;
+  }
+  .lazyload,
+  .lazyloading {
+  	opacity: 0;
+  }
+  .lazyloaded {
+  	opacity: 1;
+  	-webkit-transition: opacity 300ms;
+  	-o-transition: opacity 300ms;
+  	transition: opacity 300ms;
+  }
+  .fix {
+    position: fixed;
+  }
+  </style>
+</head>
+<body>
+  <div id="app6">
+    <h1 class="fix">Hello</h1>
+      <div class="m-card_scroll-snap">
+          <m-card m-for="image in images" content="{{image.src}}" ></m-card>
+      </div>
+  </div>
+
+  <!-- Production Build -->
+<script src="https://unpkg.com/moonjs"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.0.1/lazysizes.min.js" charset="utf-8"></script>
+  <script type="text/javascript">
+  Moon.component('m-card', {
+  props: ['content'],
+  template: '<img class="lazyload scroll-snap__item" data-src="{{content}}"/>'
+});
+
+
+  const app6 = new Moon({
+    el: "#app6",
+    data: {
+      images: [
+        {src: 'https://picsum.photos/400/300?image=0'},
+        {src: 'https://picsum.photos/400/300?image=1'},
+        {src: 'https://picsum.photos/400/300?image=2'},
+        {src: 'https://picsum.photos/400/300?image=3'},
+        {src: 'https://picsum.photos/400/300?image=4'},
+        {src: 'https://picsum.photos/400/300?image=5'},
+        {src: 'https://picsum.photos/400/300?image=6'},
+        {src: 'https://picsum.photos/400/300?image=7'},
+      ]
+    }
+  });
+
+  </script>
+</body>
+</html>
