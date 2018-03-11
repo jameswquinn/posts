@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <!-- index.html -->
+  <div id="app"></div>
+
+<script src="https://cdn.jsdelivr.net/vue/1.0.0/vue.js"></script>
+  <script type="text/javascript">
+  // voter.js
+  Vue.component('card', {
+    template: '<img src="{{post.img}}" alt="">',
+    props: ['post']
+  });
+
+  new Vue({
+    el: "#app",
+    template: '<card v-for="post in posts" :post="post"></card>',
+    data: {
+      posts: [{
+        title: "A post for our reddit demo starting at 15 votes",
+        votes: 15,
+        img: 'https://picsum.photos/400/300?image=0'
+      }, {
+        title: "Try out the upvoting, it works, I promise",
+        votes: 53,
+        img: 'https://picsum.photos/400/300?image=10'
+      }, {
+        title: "coligo is the bomb!",
+        votes: 10,
+        img: 'https://picsum.photos/400/300?image=120'
+      }]
+    }
+  });
+  </script>
+</body>
+</html>
